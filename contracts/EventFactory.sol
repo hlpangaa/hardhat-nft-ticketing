@@ -12,9 +12,6 @@ contract EventFactory is Ownable {
     /// @notice Fantom marketplace contract address;
     address public marketplace;
 
-    /// @notice NFT mint fee
-    uint256 public mintFee;
-
     /// @notice Platform fee for deploying new NFT contract
     uint256 public platformFee;
 
@@ -25,14 +22,8 @@ contract EventFactory is Ownable {
     mapping(address => bool) public exists;
 
     /// @notice Contract constructor
-    constructor(
-        address _marketplace,
-        uint256 _mintFee,
-        address payable _feeRecipient,
-        uint256 _platformFee
-    ) {
+    constructor(address _marketplace, address payable _feeRecipient, uint256 _platformFee) {
         marketplace = _marketplace;
-        mintFee = _mintFee;
         feeRecipient = _feeRecipient;
         platformFee = _platformFee;
     }
@@ -44,15 +35,6 @@ contract EventFactory is Ownable {
     */
     function updateMarketplace(address _marketplace) external onlyOwner {
         marketplace = _marketplace;
-    }
-
-    /**
-    @notice Update mint fee
-    @dev Only admin
-    @param _mintFee uint256 the platform fee to set
-    */
-    function updateMintFee(uint256 _mintFee) external onlyOwner {
-        mintFee = _mintFee;
     }
 
     /**
