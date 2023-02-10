@@ -1,7 +1,8 @@
 const { ethers, network } = require("hardhat")
 
 async function main() {
-    const to = "0x0A270fB0CEa1cCB113860B0Af6CbB98c1a0c04C8"
+    const to = "0x0A270fB0CEa1cCB113860B0Af6CbB98c1a0c04C8" //goerli
+    //const to = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266" //hardhat
     const tokenUri = "ipfs://QmPFmytBjskRqaFeBWq3Ub41sL9JMrGPAejTQcybJMMupP"
 
     const eventContract = await ethers.getContract("EventContract")
