@@ -26,6 +26,3 @@ main()
         console.error(error)
         process.exit(1)
     })
-
-//event Minted(uint256 tokenId, address beneficiary, string tokenUri, address minter);
-//mint(address _to, string calldata tokenUri)

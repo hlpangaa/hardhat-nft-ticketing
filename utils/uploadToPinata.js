@@ -4,7 +4,7 @@ const path = require("path")
 
 const pinataApiKey = process.env.PINATA_API_KEY || ""
 const pinataApiSecret = process.env.PINATA_API_SECRET || ""
-const pinata = pinataSDK(pinataApiKey, pinataApiSecret)
+const pinata = new pinataSDK(pinataApiKey, pinataApiSecret)
 
 async function storeImages(imagesFilePath) {
     const fullImagesPath = path.resolve(imagesFilePath)
@@ -12,9 +12,16 @@ async function storeImages(imagesFilePath) {
     let responses = []
     for (fileIndex in files) {
         const readableStreamForFile = fs.createReadStream(`${fullImagesPath}/${files[fileIndex]}`)
+        console.log(
+            `------------------------this is readableStreamForFile: ${readableStreamForFile}`
+        )
+        console.log(readableStreamForFile)
         try {
-            const response = await pinata.pinFileToIPFS(readableStreamForFile)
+            const response = await pinata.pinFileToIPFS(readableStreamForFile, {
+                pinataMetadata: { name: "1" },
+            })
             responses.push(response)
+            console.log(`------------------------this is response: ${responses}`)
         } catch (error) {
             console.log(error)
         }
