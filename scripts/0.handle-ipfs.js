@@ -8,13 +8,17 @@ const imagesLocation = "./scripts/ipfs-test-img"
 //     "ipfs://QmZYmH5iDbD6v3U2ixoVAjioSzvWJszDzYdbeCLquGSpVm",
 // ]
 const metadataTemplate = {
-    name: "event",
-    description: "event",
-    image: "event",
+    name: "hin",
+    description: "hin's revisit",
+    image: "ipfs link",
     attributes: [
         {
-            trait_type: "Event",
-            value: 100,
+            seat_type: "VIP",
+            seat_cap: 100,
+            price_celling: 1.5,
+            mechanism: "fixed price",
+            start_time: "10 Dec 2022",
+            end_time: 0,
         },
     ],
 }
