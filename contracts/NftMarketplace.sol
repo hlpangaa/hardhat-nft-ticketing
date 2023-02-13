@@ -165,7 +165,7 @@ contract NftMarketplace is ReentrancyGuard {
         if (msg.value < listedItem.price + royaltyAmount) {
             revert PriceNotMet(nftAddress, tokenId, listedItem.price + royaltyAmount);
         }
-        s_proceeds[listedItem.seller] += msg.value;
+        s_proceeds[listedItem.seller] += listedItem.price;
         //implement royalty payment
         (bool success, ) = payable(receiver).call{value: royaltyAmount}("");
         require(success, "Transfer royalty failed");

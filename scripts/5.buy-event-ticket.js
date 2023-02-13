@@ -1,12 +1,15 @@
 const { ethers, network } = require("hardhat")
 
 async function main() {
-    const tokenId = 4 //mint first
+    const tokenId = 1 //mint first
 
     const eventContract = await ethers.getContract("EventContract")
     const nftMarketplace = await ethers.getContract("NftMarketplace")
     const listing = await nftMarketplace.getListing(eventContract.address, tokenId)
-    const price = listing.price.toString()
+    const royalty = await eventContract.royaltyInfo(tokenId, BigInt(listing.price))
+    const listingPrice = listing.price
+    const royaltyFee = royalty[1]
+    price = listingPrice.add(royaltyFee).toString()
 
     console.log("Buying a event ticket...")
     const nftMarketplaceBuyItemtx = await nftMarketplace.buyItem(eventContract.address, tokenId, {

@@ -1,7 +1,7 @@
 const { ethers, network } = require("hardhat")
 
 async function main() {
-    const tokenContractAddress = "0xc93Bd6edE8015fAE3b6325d469558bC7F01598cF" //get new
+    const tokenContractAddress = "0x1E2A8a1e464791b2a4e0D15D7f2aa9020c0Df083" //get new
 
     const eventFactory = await ethers.getContract("EventFactory")
     console.log("Disalbing Event Contract...")

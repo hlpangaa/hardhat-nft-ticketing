@@ -81,14 +81,6 @@ contract EventContract is ERC721URIStorage, ERC2981, Ownable {
     }
 
     /**
-     * @dev checks the given token ID is approved either for all or the single token ID
-     */
-    function isApproved(uint256 _tokenId, address _operator) public view returns (bool) {
-        return
-            isApprovedForAll(ownerOf(_tokenId), _operator) || getApproved(_tokenId) == _operator;
-    }
-
-    /**
      * Implement RoyaltyInfo by Reference https://gist.github.com/shobhitic/50518080ca7cb29072d72730873ff54a
      */
 
@@ -106,7 +98,7 @@ contract EventContract is ERC721URIStorage, ERC2981, Ownable {
      * Implement price celling - checking logic built in NFTmarketplace List-item and update-listing
      */
 
-    function getpriceCelling() public view returns (uint256) {
+    function getPriceCelling() public view returns (uint256) {
         return (priceCellingFraction * mintFee) / 100;
     }
 }
