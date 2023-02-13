@@ -10,7 +10,12 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
         : VERIFICATION_BLOCK_CONFIRMATIONS
     const nftMarketplace = await ethers.getContract("NftMarketplace")
     const marketplace = nftMarketplace.address
-    const feeRecipient = "0x0A270fB0CEa1cCB113860B0Af6CbB98c1a0c04C8"
+    if (network.config.chainId == "31337") {
+        feeRecipient = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+    } else {
+        feeRecipient = "0x0A270fB0CEa1cCB113860B0Af6CbB98c1a0c04C8"
+    }
+
     const platformFee = 0
 
     log("----------------------------------------------------")
