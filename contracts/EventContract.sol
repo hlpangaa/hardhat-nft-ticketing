@@ -1,19 +1,23 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
+import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
 
-contract EventContract is ERC721URIStorage, ERC2981, Ownable {
+error MaxSupplyReached();
+error InsufficientFund(uint256 mintFee);
+error TransferFailed();
+
+contract EventContract is ERC721Enumerable, ERC721URIStorage, ERC2981, Ownable {
     /// @dev Events of the contract
-    event Minted(uint256 tokenId, address beneficiary, string tokenUri, address minter);
+    //event Minted(uint256 tokenId, address beneficiary, string tokenUri, address minter);
 
     string public contractURI;
     uint256 supplyCap;
     uint256 public mintFee;
     uint256 priceCellingFraction;
-    uint96 royaltyFeesInBips;
     address marketplace;
     uint256 private _currentTokenId = 0;
 
@@ -51,18 +55,24 @@ contract EventContract is ERC721URIStorage, ERC2981, Ownable {
      */
     function mint(address _to) external payable {
         uint256 newTokenId = _getNextTokenId();
-        require(newTokenId <= supplyCap, "Reach maxium supply cap of NFT.");
+        if (newTokenId > supplyCap) {
+            revert MaxSupplyReached();
+        } //Reach maxium supply cap of NFT.
 
         _safeMint(_to, newTokenId);
         _setTokenURI(newTokenId, contractURI);
         _incrementTokenId();
 
-        require(msg.value >= mintFee, "Insufficient funds for minting.");
+        if (msg.value < mintFee) {
+            revert InsufficientFund(mintFee);
+        } // "Insufficient funds for minting."
         // Send FTM fee to fee recipient
         (bool success, ) = feeReceipient.call{value: mintFee}("");
-        require(success, "Transfer failed");
+        if (!success) {
+            revert TransferFailed();
+        } //"Transfer failed"
 
-        emit Minted(newTokenId, _to, contractURI, _msgSender());
+        //emit Minted(newTokenId, _to, contractURI, _msgSender());
     }
 
     /**

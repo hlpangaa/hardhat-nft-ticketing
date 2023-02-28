@@ -12,7 +12,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     const _name = "Hin"
     const _symbol = "Hin"
     const _contractURI = "ipfs://QmPFmytBjskRqaFeBWq3Ub41sL9JMrGPAejTQcybJMMupP"
-    const _supplyCap = 3
+    const _supplyCap = 10
     const _mintFee = ethers.utils.parseEther("0.1") //100000000000000000
     const _priceCellingFraction = 110
     const _royaltyFeesInBips = 250
