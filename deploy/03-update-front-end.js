@@ -9,7 +9,7 @@ const fs = require("fs")
 const { network } = require("hardhat")
 
 async function main() {
-    if (process.env.UPDATE_FRONT_END) {
+    if (process.env.UPDATE_FRONT_END && network.config.chainId == "5") {
         console.log(
             `Writing to front end... in ${frontEndAbiLocation2} and ${frontEndContractsFile2}`
         )

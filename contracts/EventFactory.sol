@@ -67,7 +67,7 @@ contract EventFactory is Ownable {
     /// @notice Method for disabling existing EventContract contract
     /// @param  tokenContractAddress Address of NFT contract
     function disableTokenContract(address tokenContractAddress) external onlyOwner {
-        require(exists[tokenContractAddress], "NFT contract is not registered");
+        require(exists[tokenContractAddress], "Address is not registered");
         exists[tokenContractAddress] = false;
         emit ContractDisabled(_msgSender(), tokenContractAddress);
     }
