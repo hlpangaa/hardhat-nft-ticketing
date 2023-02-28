@@ -4,6 +4,8 @@ pragma solidity ^0.8.7;
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "./EventContract.sol";
 
+error AddressNotRegistered();
+
 contract EventFactory is Ownable {
     /// @dev Events of the contract
     event ContractCreated(address creator, address nft);
@@ -12,20 +14,12 @@ contract EventFactory is Ownable {
     /// @notice Fantom marketplace contract address;
     address public marketplace;
 
-    /// @notice Platform fee for deploying new NFT contract
-    uint256 public deposit;
-
-    /// @notice Platform fee recipient
-    address payable public feeRecipient;
-
     /// @notice NFT Address => Bool
     mapping(address => bool) public exists;
 
     /// @notice Contract constructor
-    constructor(address _marketplace, address payable _feeRecipient, uint256 _deposit) {
+    constructor(address _marketplace) {
         marketplace = _marketplace;
-        feeRecipient = _feeRecipient;
-        deposit = _deposit;
     }
 
     /// @notice Method for deploy new EventContract contract
@@ -42,11 +36,6 @@ contract EventFactory is Ownable {
         //implement royalty payment
         uint96 _royaltyFeesInBips
     ) external payable returns (address) {
-        uint256 amount = address(this).balance;
-        require(msg.value >= deposit, "Insufficient funds.");
-        (bool success, ) = feeRecipient.call{value: amount}("");
-        require(success, "Transfer failed");
-
         EventContract nft = new EventContract(
             _name,
             _symbol,
@@ -56,7 +45,7 @@ contract EventFactory is Ownable {
             _priceCellingFraction,
             _royaltyFeesInBips,
             marketplace,
-            feeRecipient
+            payable(_msgSender())
         );
         exists[address(nft)] = true;
         nft.transferOwnership(_msgSender());
@@ -67,7 +56,9 @@ contract EventFactory is Ownable {
     /// @notice Method for disabling existing EventContract contract
     /// @param  tokenContractAddress Address of NFT contract
     function disableTokenContract(address tokenContractAddress) external onlyOwner {
-        require(exists[tokenContractAddress], "Address is not registered");
+        if (!exists[tokenContractAddress]) {
+            revert AddressNotRegistered();
+        } // "Address is not registered");
         exists[tokenContractAddress] = false;
         emit ContractDisabled(_msgSender(), tokenContractAddress);
     }
