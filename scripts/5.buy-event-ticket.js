@@ -6,10 +6,7 @@ async function main() {
     const eventContract = await ethers.getContract("EventContract")
     const nftMarketplace = await ethers.getContract("NftMarketplace")
     const listing = await nftMarketplace.getListing(eventContract.address, tokenId)
-    const royalty = await eventContract.royaltyInfo(tokenId, BigInt(listing.price))
     const listingPrice = listing.price
-    const royaltyFee = royalty[1]
-    price = listingPrice.add(royaltyFee).toString()
 
     console.log("Buying a event ticket...")
     const nftMarketplaceBuyItemtx = await nftMarketplace.buyItem(eventContract.address, tokenId, {

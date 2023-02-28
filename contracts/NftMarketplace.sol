@@ -47,6 +47,14 @@ contract NftMarketplace is ReentrancyGuard {
         uint256 price
     );
 
+    event RoyalityPaid(
+        address indexed buyer,
+        address indexed receiver,
+        address indexed nftAddress,
+        uint256 tokenId,
+        uint256 royaltyAmount
+    );
+
     mapping(address => mapping(uint256 => Listing)) private s_listings;
     mapping(address => uint256) private s_proceeds;
 
@@ -162,10 +170,10 @@ contract NftMarketplace is ReentrancyGuard {
         IEventContract nftEC = IEventContract(nftAddress);
         (address receiver, uint256 royaltyAmount) = nftEC.royaltyInfo(tokenId, listedItem.price);
 
-        if (msg.value < listedItem.price + royaltyAmount) {
-            revert PriceNotMet(nftAddress, tokenId, listedItem.price + royaltyAmount);
+        if (msg.value < listedItem.price) {
+            revert PriceNotMet(nftAddress, tokenId, listedItem.price);
         }
-        s_proceeds[listedItem.seller] += listedItem.price;
+        s_proceeds[listedItem.seller] += listedItem.price - royaltyAmount;
         //implement royalty payment
         (bool success, ) = payable(receiver).call{value: royaltyAmount}("");
         require(success, "Transfer royalty failed");
@@ -173,6 +181,7 @@ contract NftMarketplace is ReentrancyGuard {
         delete (s_listings[nftAddress][tokenId]);
         IERC721(nftAddress).safeTransferFrom(listedItem.seller, msg.sender, tokenId);
         emit ItemBought(msg.sender, nftAddress, tokenId, listedItem.price);
+        emit RoyalityPaid(msg.sender, receiver, nftAddress, tokenId, royaltyAmount);
     }
 
     /*
