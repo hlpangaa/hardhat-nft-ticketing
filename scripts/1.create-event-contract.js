@@ -4,7 +4,7 @@ async function main() {
     const _name = "Hin"
     const _symbol = "Hin"
     const _contractURI = "ipfs://Qmf2xvUekEhSrEcG4NCrBWXBFjw11b9wzoRdCq9pQzFVbR"
-    const _supplyCap = 3
+    const _supplyCap = 100
     const _mintFee = ethers.utils.parseEther("0.1") //100000000000000000
     const _priceCellingFraction = 110
     const _royaltyFeesInBips = 250
