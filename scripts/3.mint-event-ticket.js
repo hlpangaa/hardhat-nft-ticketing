@@ -21,16 +21,15 @@ async function main() {
     console.log("Minting a event ticket...")
     const eventContractMintTx = await eventContract.mint(to, { value: mintprice })
     const eventContractMintTxReceipt = await eventContractMintTx.wait(1)
-    /*
-    for (const event of eventContractMintTxReceipt.events) {
-        console.log(`event: ${event.event}`)
-    }
-*/
-    console.log(`event: ${eventContractMintTxReceipt.events[1].event}`)
-    console.log(`tokenId: ${eventContractMintTxReceipt.events[1].args[0]}`)
-    console.log(`beneficiary: ${eventContractMintTxReceipt.events[1].args[1]}`)
-    console.log(`tokenUri: ${eventContractMintTxReceipt.events[1].args[2]}`)
-    console.log(`minter: ${eventContractMintTxReceipt.events[1].args[3]}`)
+
+    // for (const event of eventContractMintTxReceipt.events) {
+    //     console.log(`event: ${event.event}`)
+    // }
+
+    console.log(`event: ${eventContractMintTxReceipt.events[0].event}`)
+    console.log(`from: ${eventContractMintTxReceipt.events[0].args[0]}`)
+    console.log(`to: ${eventContractMintTxReceipt.events[0].args[1]}`)
+    console.log(`tokenId: ${eventContractMintTxReceipt.events[0].args[2]}`)
 }
 
 main()

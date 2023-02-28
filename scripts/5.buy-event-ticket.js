@@ -10,7 +10,7 @@ async function main() {
 
     console.log("Buying a event ticket...")
     const nftMarketplaceBuyItemtx = await nftMarketplace.buyItem(eventContract.address, tokenId, {
-        value: price,
+        value: listingPrice,
     })
     const nftMarketplaceBuyItemtxReceipt = await nftMarketplaceBuyItemtx.wait(1)
 

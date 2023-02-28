@@ -19,7 +19,7 @@ module.exports = async ({ getNamedAccounts, deployments }) => {
     const platformFee = 0
 
     log("----------------------------------------------------")
-    const arguments = [marketplace, feeRecipient, platformFee]
+    const arguments = [marketplace]
     const eventFactory = await deploy("EventFactory", {
         from: deployer,
         args: arguments,
