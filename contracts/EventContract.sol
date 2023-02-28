@@ -1,13 +1,12 @@
 // SPDX-License-Identifier: MIT
 pragma solidity ^0.8.7;
 
-import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721URIStorage.sol";
 import "@openzeppelin/contracts/token/ERC721/extensions/ERC721Enumerable.sol";
 import "@openzeppelin/contracts/access/Ownable.sol";
 import "@openzeppelin/contracts/token/common/ERC2981.sol";
 
-contract EventContract is ERC721, ERC721Enumerable, ERC721URIStorage, ERC2981, Ownable {
+contract EventContract is ERC721Enumerable, ERC721URIStorage, ERC2981, Ownable {
     /// @dev Events of the contract
     event Minted(uint256 tokenId, address beneficiary, string tokenUri, address minter);
 
