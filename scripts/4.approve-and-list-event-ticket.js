@@ -1,7 +1,7 @@
 const { ethers, network } = require("hardhat")
 
 async function main() {
-    const tokenId = 4 //mint first
+    const tokenId = 1 //mint first
     const PRICE = ethers.utils.parseEther("0.1")
 
     const eventContract = await ethers.getContract("EventContract")

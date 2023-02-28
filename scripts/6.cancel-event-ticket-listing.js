@@ -1,7 +1,7 @@
 const { ethers, network } = require("hardhat")
 
 async function main() {
-    const tokenId = 4
+    const tokenId = 1
 
     const eventContract = await ethers.getContract("EventContract")
     const nftMarketplace = await ethers.getContract("NftMarketplace")

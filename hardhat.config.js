@@ -36,9 +36,11 @@ module.exports = {
             //   url: MAINNET_RPC_URL
             // }
             chainId: 31337,
+            allowUnlimitedContractSize: true,
         },
         localhost: {
             chainId: 31337,
+            allowUnlimitedContractSize: true,
         },
         goerli: {
             url: GOERLI_RPC_URL,
@@ -48,6 +50,7 @@ module.exports = {
             //   },
             saveDeployments: true,
             chainId: 5,
+            allowUnlimitedContractSize: true,
         },
         mainnet: {
             url: MAINNET_RPC_URL,

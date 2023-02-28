@@ -2,7 +2,11 @@ const { ethers, network } = require("hardhat")
 
 async function main() {
     const nftMarketplace = await ethers.getContract("NftMarketplace")
-    const seller = "0x0A270fB0CEa1cCB113860B0Af6CbB98c1a0c04C8"
+    if (network.config.chainId == "31337") {
+        seller = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
+    } else {
+        seller = "0x0A270fB0CEa1cCB113860B0Af6CbB98c1a0c04C8"
+    }
 
     console.log("checking original balance in NFT marketplace...")
     const proceeds = await nftMarketplace.getProceeds(seller)
