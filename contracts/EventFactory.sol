@@ -11,29 +11,21 @@ contract EventFactory is Ownable {
     event ContractCreated(address creator, address nft);
     event ContractDisabled(address caller, address nft);
 
-    /// @notice Fantom marketplace contract address;
     address public marketplace;
 
-    /// @notice NFT Address => Bool
     mapping(address => bool) public exists;
 
-    /// @notice Contract constructor
     constructor(address _marketplace) {
         marketplace = _marketplace;
     }
 
-    /// @notice Method for deploy new EventContract contract
-    /// @param _name Name of NFT contract
-    /// @param _symbol Symbol of NFT contract
     function createNFTContract(
         string memory _name,
         string memory _symbol,
-        //implement eventInfo;
         string memory _contractURI,
         uint256 _supplyCap,
         uint256 _mintFee,
         uint256 _priceCellingFraction,
-        //implement royalty payment
         uint96 _royaltyFeesInBips
     ) external payable returns (address) {
         EventContract nft = new EventContract(
@@ -53,8 +45,6 @@ contract EventFactory is Ownable {
         return address(nft);
     }
 
-    /// @notice Method for disabling existing EventContract contract
-    /// @param  tokenContractAddress Address of NFT contract
     function disableTokenContract(address tokenContractAddress) external onlyOwner {
         if (!exists[tokenContractAddress]) {
             revert AddressNotRegistered();

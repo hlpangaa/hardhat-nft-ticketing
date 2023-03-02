@@ -1,7 +1,11 @@
 const { ethers, network } = require("hardhat")
+const newEventContractAddress = ""
 
-async function main() {
-    const tokenContractAddress = "0xBC3c6dB44074F7422Ab6eF23f255A5072350aA2C" //get new
+async function script2(newEventContractAddress) {
+    const tokenContractAddress = newEventContractAddress //get new
+    console.log(
+        `-----------------------SCRIPT2----DISABLE-EVENT-----------------------------------------`
+    )
 
     const eventFactory = await ethers.getContract("EventFactory")
     console.log("Disalbing Event Contract...")
@@ -15,16 +19,21 @@ async function main() {
         console.log(event.event)
     }
 */
+
     console.log(`event: ${eventFactoryDisableTokenContractTxReceipt.events[0].event}`)
     console.log(`_msgSender: ${eventFactoryDisableTokenContractTxReceipt.events[0].args[0]}`)
     console.log(
         `tokenContractAddress: ${eventFactoryDisableTokenContractTxReceipt.events[0].args[1]}`
     )
+    console.log(
+        `-----------------------SCRIPT2----DISABLE-EVENT-----------------------------------------`
+    )
 }
 
-main()
-    .then(() => process.exit(0))
-    .catch((error) => {
-        console.error(error)
-        process.exit(1)
-    })
+// main(newEventContractAddress)
+//     .then(() => process.exit(0))
+//     .catch((error) => {
+//         console.error(error)
+//         process.exit(1)
+//     })
+module.exports = script2

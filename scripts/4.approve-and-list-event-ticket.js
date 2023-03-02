@@ -1,7 +1,11 @@
 const { ethers, network } = require("hardhat")
+const newTokenId = ""
 
-async function main() {
-    const tokenId = 1 //mint first
+async function script4(newTokenId) {
+    const tokenId = newTokenId //mint first
+    console.log(
+        `-----------------------SCRIPT4----LIST-TICKET-----------------------------------------`
+    )
     const PRICE = ethers.utils.parseEther("0.1")
 
     const eventContract = await ethers.getContract("EventContract")
@@ -23,16 +27,22 @@ async function main() {
         console.log(`event: ${event.event}`)
     }
 */
+
     console.log(`event: ${nftMarketplaceListItemtxReceipt.events[0].event}`)
     console.log(`seller: ${nftMarketplaceListItemtxReceipt.events[0].args[0]}`)
     console.log(`nftAddress: ${nftMarketplaceListItemtxReceipt.events[0].args[1]}`)
     console.log(`tokenId: ${nftMarketplaceListItemtxReceipt.events[0].args[2]}`)
     console.log(`price: ${nftMarketplaceListItemtxReceipt.events[0].args[3]}`)
+    console.log(
+        `-----------------------SCRIPT4----LIST-TICKET-----------------------------------------`
+    )
 }
 
-main()
-    .then(() => process.exit(0))
-    .catch((error) => {
-        console.error(error)
-        process.exit(1)
-    })
+// main(newTokenId)
+//     .then(() => process.exit(0))
+//     .catch((error) => {
+//         console.error(error)
+//         process.exit(1)
+//     })
+
+module.exports = script4

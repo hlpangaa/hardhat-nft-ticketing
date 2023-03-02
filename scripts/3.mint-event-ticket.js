@@ -3,7 +3,8 @@ const { ethers, network } = require("hardhat")
 // @script: yarn hardhat run 'scripts/3.mint-event-ticket.js' --network goerli
 //
 
-async function main() {
+async function script3() {
+    newTokenId = ""
     if (network.config.chainId == "31337") {
         to = "0xf39Fd6e51aad88F6F4ce6aB8827279cffFb92266"
     } else {
@@ -15,11 +16,15 @@ async function main() {
 
     const eventContract = await ethers.getContract("EventContract")
     const mintprice = await eventContract.mintFee()
-
+    console.log(
+        `-----------------------SCRIPT3----MINT-TICKET-----------------------------------------`
+    )
     console.log(`mintPrice: : ${mintprice.toString()}`)
 
     console.log("Minting a event ticket...")
-    const eventContractMintTx = await eventContract.mint(to, { value: mintprice })
+    const eventContractMintTx = await eventContract.mint(to, {
+        value: mintprice,
+    })
     const eventContractMintTxReceipt = await eventContractMintTx.wait(1)
 
     // for (const event of eventContractMintTxReceipt.events) {
@@ -30,11 +35,19 @@ async function main() {
     console.log(`from: ${eventContractMintTxReceipt.events[0].args[0]}`)
     console.log(`to: ${eventContractMintTxReceipt.events[0].args[1]}`)
     console.log(`tokenId: ${eventContractMintTxReceipt.events[0].args[2]}`)
+    console.log(
+        `-----------------------SCRIPT3----MINT-TICKET-----------------------------------------`
+    )
+    newTokenId = eventContractMintTxReceipt.events[0].args[2]
+
+    return newTokenId
 }
 
-main()
-    .then(() => process.exit(0))
-    .catch((error) => {
-        console.error(error)
-        process.exit(1)
-    })
+// main()
+//     .then(() => process.exit(0))
+//     .catch((error) => {
+//         console.error(error)
+//         process.exit(1)
+//     })
+
+module.exports = script3

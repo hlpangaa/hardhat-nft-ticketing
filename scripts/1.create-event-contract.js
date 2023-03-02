@@ -1,10 +1,13 @@
 const { ethers, network } = require("hardhat")
 
-async function main() {
+async function script1() {
+    console.log("Running")
+    newEventContractAddress = ""
+    //config
     const _name = "Hin"
     const _symbol = "Hin"
     const _contractURI = "ipfs://Qmf2xvUekEhSrEcG4NCrBWXBFjw11b9wzoRdCq9pQzFVbR"
-    const _supplyCap = 100
+    const _supplyCap = 1
     const _mintFee = ethers.utils.parseEther("0.1") //100000000000000000
     const _priceCellingFraction = 110
     const _royaltyFeesInBips = 250
@@ -15,7 +18,9 @@ async function main() {
     } else {
         feeRecipient = "0x0A270fB0CEa1cCB113860B0Af6CbB98c1a0c04C8"
     }
-
+    console.log(
+        `-----------------------SCRIPT1----CREATE-EVENT-----------------------------------------`
+    )
     const eventFactory = await ethers.getContract("EventFactory")
     console.log("Creating Event Contract...")
     const eventFactoryCreateNFTContractTx = await eventFactory.createNFTContract(
@@ -37,11 +42,19 @@ async function main() {
     console.log(`event: ${eventFactoryCreateNFTContractTxReceipt.events[2].event}`)
     console.log(`creator: ${eventFactoryCreateNFTContractTxReceipt.events[2].args[0]}`)
     console.log(`nft: ${eventFactoryCreateNFTContractTxReceipt.events[2].args[1]}`)
+    console.log(
+        `-----------------------SCRIPT1----CREATE-EVENT-----------------------------------------`
+    )
+
+    newEventContractAddress = eventFactoryCreateNFTContractTxReceipt.events[2].args[1]
+
+    return newEventContractAddress
 }
 
-main()
-    .then(() => process.exit(0))
-    .catch((error) => {
-        console.error(error)
-        process.exit(1)
-    })
+// main()
+//     .then(() => process.exit(0))
+//     .catch((error) => {
+//         console.error(error)
+//         process.exit(1)
+//     })
+module.exports = script1
