@@ -17,6 +17,7 @@ error NotOwner();
 error NotApprovedForMarketplace();
 error PriceMustBeAboveZero();
 error PriceAbovePriceCelling();
+error InsufficientFund(uint256 mintFee);
 
 // Error thrown for isNotOwner modifier
 // error IsNotOwner()
@@ -54,6 +55,8 @@ contract NftMarketplace is ReentrancyGuard {
         uint256 tokenId,
         uint256 royaltyAmount
     );
+
+    event Minted(uint256 tokenId, address beneficiary, string tokenUri, address minter);
 
     mapping(address => mapping(uint256 => Listing)) private s_listings;
     mapping(address => uint256) private s_proceeds;
@@ -227,6 +230,15 @@ contract NftMarketplace is ReentrancyGuard {
         require(success, "Transfer failed");
     }
 
+    function mintFromMarketplace(address _to, address nftAddress) external payable {
+        IEventContract nftEC = IEventContract(nftAddress);
+        uint256 newTokenId = nftEC._getNextTokenId();
+        string memory contractURI = nftEC.contractURI();
+        nftEC.mint{value: msg.value}(_to);
+
+        emit Minted(newTokenId, _to, contractURI, msg.sender);
+    }
+
     /////////////////////
     // Getter Functions //
     /////////////////////
@@ -241,4 +253,10 @@ contract NftMarketplace is ReentrancyGuard {
     function getProceeds(address seller) external view returns (uint256) {
         return s_proceeds[seller];
     }
+
+    ///////////////////////
+    // fallback Functions //
+    ///////////////////////
+
+    receive() external payable {}
 }

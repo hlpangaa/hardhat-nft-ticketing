@@ -7,6 +7,10 @@ import "@openzeppelin/contracts/utils/introspection/IERC165.sol";
  * @dev Required interface of an ERC721 compliant contract.
  */
 interface IEventContract is IERC165 {
+    function contractURI() external view returns (string memory contractURI);
+
+    function mintFee() external view returns (uint256 mintFee);
+
     function getPriceCelling() external view returns (uint256 priceCelling);
 
     function royaltyInfo(
