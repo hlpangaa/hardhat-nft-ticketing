@@ -1,5 +1,5 @@
 //yarn hardhat run scripts/run_scripts.js --network localhost
-//yarn hardhat run scripts/99.update-front-end.js --network localhost
+//yarn hardhat run scripts/update-front-end.js --network goerli
 
 const script1 = require("./1.create-event-contract.js")
 const script2 = require("./2.disable-event-contract.js")

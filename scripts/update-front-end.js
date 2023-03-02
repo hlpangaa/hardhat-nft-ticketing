@@ -1,3 +1,4 @@
+//yarn hardhat run scripts/update-front-end.js --network goerli
 const {
     frontEndContractsFile,
     frontEndContractsFile2,
@@ -87,15 +88,17 @@ async function updateContractAddresses() {
             fs.readFileSync("./deployments/goerli/EventFactory.json", "utf8")
         )
 
+        console.log(nftMarketplace_deployment_json.receipt.blockNumber)
+
         networks = {
             goerli: {
                 NftMarketplace: {
-                    address: [nftMarketplace_deployment_json.addres],
-                    startBlock: [nftMarketplace_deployment_json.receipt.logs.blockNumber],
+                    address: nftMarketplace_deployment_json.address,
+                    startBlock: nftMarketplace_deployment_json.receipt.blockNumber,
                 },
                 EventFactory: {
-                    address: [eventFactory_deployment_json.addres],
-                    startBlock: [eventFactory_deployment_json.receipt.logs.blockNumber],
+                    address: eventFactory_deployment_json.address,
+                    startBlock: eventFactory_deployment_json.receipt.blockNumber,
                 },
             },
         }
