@@ -1,4 +1,5 @@
 //yarn hardhat run scripts/run_scripts.js --network localhost
+//yarn hardhat run scripts/99.update-front-end.js --network localhost
 
 const script1 = require("./1.create-event-contract.js")
 const script2 = require("./2.disable-event-contract.js")
@@ -21,6 +22,7 @@ async function runTask() {
     // await script6(newTokenId)
     // await script7()
     // await script8()
+
     for (let i = 0; i < 5; i++) {
         await script3()
     }
