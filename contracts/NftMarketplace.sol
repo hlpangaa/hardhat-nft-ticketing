@@ -56,7 +56,12 @@ contract NftMarketplace is ReentrancyGuard {
         uint256 royaltyAmount
     );
 
-    event Minted(uint256 tokenId, address beneficiary, string tokenUri, address minter);
+    event ItemMinted(
+        uint256 indexed tokenId,
+        address indexed nftAddress,
+        address indexed beneficiary,
+        address minter
+    );
 
     mapping(address => mapping(uint256 => Listing)) private s_listings;
     mapping(address => uint256) private s_proceeds;
@@ -233,10 +238,9 @@ contract NftMarketplace is ReentrancyGuard {
     function mintFromMarketplace(address _to, address nftAddress) external payable {
         IEventContract nftEC = IEventContract(nftAddress);
         uint256 newTokenId = nftEC._getNextTokenId();
-        string memory contractURI = nftEC.contractURI();
         nftEC.mint{value: msg.value}(_to);
 
-        emit Minted(newTokenId, _to, contractURI, msg.sender);
+        emit ItemMinted(newTokenId, nftAddress, _to, msg.sender);
     }
 
     /////////////////////

@@ -13,19 +13,19 @@ const script8 = require("./8.mint-event-ticket-from-marketplace.js")
 
 // Run the script files in sequence
 async function runTask() {
-    // const newEventContractAddress = await script1()
-    // await script2(newEventContractAddress)
-    // const newTokenId = await script3()
-    // await script4(newTokenId)
-    // await script5(newTokenId)
-    // await script4(newTokenId)
-    // await script6(newTokenId)
-    // await script7()
-    // await script8()
+    const newEventContractAddress = await script1()
+    await script2(newEventContractAddress)
+    const newTokenId = await script3()
+    await script4(newTokenId)
+    await script5(newTokenId)
+    await script4(newTokenId)
+    await script6(newTokenId)
+    await script7()
+    await script8()
 
-    for (let i = 0; i < 5; i++) {
-        await script3()
-    }
+    // for (let i = 0; i < 5; i++) {
+    //     await script3()
+    // }
 }
 
 runTask()
