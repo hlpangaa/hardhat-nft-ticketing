@@ -29,7 +29,7 @@ const developmentChains = ["hardhat", "localhost"]
 const VERIFICATION_BLOCK_CONFIRMATIONS = 6
 const frontEndContractsFile = "../nextjs-nft-ticketing/constants/networkMapping.json"
 const frontEndContractsFile2 = "../subgraph-nft-ticketing/networks.json"
-const frontEndAbiLocation = "../nextjs-nft-ticketing/constants/"
+const frontEndAbiLocation = "../nextjs-nft-ticketing-mui/constants/"
 const frontEndAbiLocation2 = "../subgraph-nft-ticketing/abis/"
 
 module.exports = {

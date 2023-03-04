@@ -24,25 +24,6 @@ async function main() {
 }
 
 async function updateAbi() {
-    //next-js abi - need 3:
-    const nftMarketplace = await ethers.getContract("NftMarketplace")
-    fs.writeFileSync(
-        `${frontEndAbiLocation}NftMarketplace.json`,
-        nftMarketplace.interface.format(ethers.utils.FormatTypes.json)
-    )
-
-    const eventFactory = await ethers.getContract("EventFactory")
-    fs.writeFileSync(
-        `${frontEndAbiLocation}EventFactory.json`,
-        eventFactory.interface.format(ethers.utils.FormatTypes.json)
-    )
-    const eventContract = await ethers.getContract("EventContract")
-    fs.writeFileSync(
-        `${frontEndAbiLocation}EventContract.json`,
-        eventContract.interface.format(ethers.utils.FormatTypes.json)
-    )
-
-    //subgraph abi only listen marketplace and factory contract;
     if (network.config.chainId.toString() == 5) {
         const nftMarketplace_deployment_json = JSON.parse(
             fs.readFileSync(`./deployments/goerli/NftMarketplace.json`, "utf8")
@@ -50,8 +31,24 @@ async function updateAbi() {
         const eventFactory_deployment_json = JSON.parse(
             fs.readFileSync(`./deployments/goerli/EventFactory.json`, "utf8")
         )
+        const eventContract_deployment_json = JSON.parse(
+            fs.readFileSync(`./deployments/goerli/EventContract.json`, "utf8")
+        )
         nftMarketplace_abi = nftMarketplace_deployment_json["abi"]
         eventFactory__abi = eventFactory_deployment_json["abi"]
+        eventContract__abi = eventContract_deployment_json["abi"]
+        fs.writeFileSync(
+            `${frontEndAbiLocation}NftMarketplace.json`,
+            JSON.stringify(nftMarketplace_abi)
+        )
+        fs.writeFileSync(
+            `${frontEndAbiLocation}EventFactory.json`,
+            JSON.stringify(eventFactory__abi)
+        )
+        fs.writeFileSync(
+            `${frontEndAbiLocation}EventContract.json`,
+            JSON.stringify(eventContract__abi)
+        )
         fs.writeFileSync(
             `${frontEndAbiLocation2}NftMarketplace.json`,
             JSON.stringify(nftMarketplace_abi)
@@ -59,6 +56,10 @@ async function updateAbi() {
         fs.writeFileSync(
             `${frontEndAbiLocation2}EventFactory.json`,
             JSON.stringify(eventFactory__abi)
+        )
+        fs.writeFileSync(
+            `${frontEndAbiLocation2}EventContract.json`,
+            JSON.stringify(eventContract__abi)
         )
     }
 }
