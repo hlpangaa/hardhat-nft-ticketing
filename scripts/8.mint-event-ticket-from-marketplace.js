@@ -38,8 +38,7 @@ async function script8() {
     console.log(`event: ${nftMarketPlacemintFromMarketplaceTxReceipt.events[1].event}`)
     console.log(`newTokenId: ${nftMarketPlacemintFromMarketplaceTxReceipt.events[1].args[0]}`)
     console.log(`_to: ${nftMarketPlacemintFromMarketplaceTxReceipt.events[1].args[1]}`)
-    console.log(`contractURI: ${nftMarketPlacemintFromMarketplaceTxReceipt.events[1].args[2]}`)
-    console.log(`msg.sender: ${nftMarketPlacemintFromMarketplaceTxReceipt.events[1].args[3]}`)
+    console.log(`msg.sender: ${nftMarketPlacemintFromMarketplaceTxReceipt.events[1].args[2]}`)
     console.log(
         `-----------------------SCRIPT8----MINT-NFT-FROM-MARKETPLACE-----------------------------------------`
     )
